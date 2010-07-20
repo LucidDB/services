@@ -1,0 +1,33 @@
+<project name="DynamoDB-Services" default="deploy">
+
+  <property name="tomcat_version" value="7.0.0" />
+  <property name="tomcat_zip" value="${basedir}/sources/apache-tomcat-${tomcat_version}.zip" />
+  <property name="deploy_zip_name" value="dynamobi-services" />
+
+  <property name="wars.dir" value="${basedir}/wars" />
+  <property name="deploy.dir" value="${basedir}/deploy" />
+  <property name="temp.dir" value="${basedir}/tmp" />
+  <property name="webapp.dir" value="${temp.dir}/apache-tomcat-${tomcat_version}/webapps" />
+
+  <target name="clean">
+    <delete dir="${temp.dir}" />
+    <delete dir="${deploy.dir}" />
+  </target>
+
+  <target name="unzip">
+    <mkdir dir="${temp.dir}" />
+    <unzip src="${tomcat_zip}" dest="${temp.dir}" />
+  </target>
+
+  <target name="deploy" depends="unzip">
+    <mkdir dir="${deploy.dir}" />
+    <copy todir="${webapp.dir}">
+      <fileset dir="${wars.dir}">
+        <include name="**/*.war" />
+      </fileset>
+    </copy>
+    <!-- Modify tomcat here -->
+    <zip destfile="${deploy.dir}/${deploy_zip_name}.zip" basedir="${temp.dir}/apache-tomcat-${tomcat_version}" excludes="" />
+  </target>
+
+</project>

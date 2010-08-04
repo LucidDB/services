@@ -17,6 +17,8 @@
   <target name="unzip">
     <mkdir dir="${temp.dir}" />
     <unzip src="${tomcat_zip}" dest="${temp.dir}" />
+    <chmod perm="755" dir="${temp.dir}/apache-tomcat-${tomcat_version}/bin"
+           includes="**/*.sh" />
   </target>
 
   <target name="deploy" depends="unzip">

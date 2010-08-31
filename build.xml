@@ -15,7 +15,9 @@
   </target>
 	
 	<target name="cleanWars">
-	    <delete dir="${wars.dir}" />
+		  <delete>
+		    <fileset dir="${wars.dir}" includes="**/*.war"/>
+		  </delete>
 	  </target>
 		
 

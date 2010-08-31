@@ -1,4 +1,4 @@
-<project name="DynamoDB-Services" default="deploy">
+<project name="DynamoDB-Services" default="package">
 
   <property name="tomcat_version" value="7.0.0" />
   <property name="tomcat_zip" value="${basedir}/sources/apache-tomcat-${tomcat_version}.zip" />
@@ -13,15 +13,26 @@
     <delete dir="${temp.dir}" />
     <delete dir="${deploy.dir}" />
   </target>
+	
+	<target name="cleanWars">
+	    <delete dir="${wars.dir}" />
+	  </target>
+		
 
-  <target name="unzip">
+  <target name="unzip" depends="clean">
     <mkdir dir="${temp.dir}" />
     <unzip src="${tomcat_zip}" dest="${temp.dir}" />
     <chmod perm="755" dir="${temp.dir}/apache-tomcat-${tomcat_version}/bin"
            includes="**/*.sh" />
   </target>
+	
+  <!-- retrieveWars only used in CI system -->
+  <target name="retrieveWars" depends="cleanWars">
+	<get dest="${wars.dir}/adminui.war" src="${adminui_war_url}"/>
+  	<get dest="${wars.dir}/adminws.war" src="${adminws_war_url}"/>
+	</target>
 
-  <target name="deploy" depends="unzip">
+  <target name="package" depends="unzip">
     <mkdir dir="${deploy.dir}" />
     <copy todir="${webapp.dir}">
       <fileset dir="${wars.dir}">

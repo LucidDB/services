@@ -24,8 +24,35 @@
   <target name="unzip" depends="clean">
     <mkdir dir="${temp.dir}" />
     <unzip src="${tomcat_zip}" dest="${temp.dir}" />
+    <!-- Modify tomcat here -->
     <chmod perm="755" dir="${temp.dir}/apache-tomcat-${tomcat_version}/bin"
-           includes="**/*.sh" />
+      includes="**/*.sh" />
+    <!-- replace the default SHUTDOWN port -->
+    <replace file="${temp.dir}/apache-tomcat-${tomcat_version}/conf/server.xml"
+      token='port="8005"' value='port="8071"' />
+    <!-- replace the default http port -->
+    <replace file="${temp.dir}/apache-tomcat-${tomcat_version}/conf/server.xml"
+      token='port="8080"' value='port="8077"' />
+    <!-- replace the default https port -->
+    <replace file="${temp.dir}/apache-tomcat-${tomcat_version}/conf/server.xml"
+      token='port="8443"' value='port="8073"' />
+    <!-- replace the default ajp port -->
+    <replace file="${temp.dir}/apache-tomcat-${tomcat_version}/conf/server.xml"
+      token='port="8009"' value='port="8072"' />
+    <!-- replace the default redirect port -->
+    <replace file="${temp.dir}/apache-tomcat-${tomcat_version}/conf/server.xml"
+      token='redirectPort="8443"' value='redirectPort="8079"' />
+
+    <!-- Remove default webapps -->
+    <delete dir="${temp.dir}/apache-tomcat-${tomcat_version}/webapps/docs" />
+    <delete dir="${temp.dir}/apache-tomcat-${tomcat_version}/webapps/examples" />
+    <delete dir="${temp.dir}/apache-tomcat-${tomcat_version}/webapps/manager" />
+    <delete dir="${temp.dir}/apache-tomcat-${tomcat_version}/webapps/host-manager" />
+    <delete dir="${temp.dir}/apache-tomcat-${tomcat_version}/webapps/ROOT" />
+
+    <mkdir dir="${temp.dir}/apache-tomcat-${tomcat_version}/webapps/ROOT" />
+    <copy file="${basedir}/sources/index.redirect.html" toFile="${temp.dir}/apache-tomcat-${tomcat_version}/webapps/ROOT/index.html" />
+
   </target>
 	
   <!-- retrieveWars only used in CI system -->
@@ -41,8 +68,12 @@
         <include name="**/*.war" />
       </fileset>
     </copy>
-    <!-- Modify tomcat here -->
-    <zip destfile="${deploy.dir}/${deploy_zip_name}.zip" basedir="${temp.dir}/apache-tomcat-${tomcat_version}" excludes="" />
+    <move todir="${temp.dir}/dynamodb-services">
+      <fileset dir="${temp.dir}/apache-tomcat-${tomcat_version}" includes="**/*" />
+    </move>
+    <delete dir="${temp.dir}/apache-tomcat-${tomcat_version}" />
+    <zip destfile="${deploy.dir}/${deploy_zip_name}.zip" basedir="${temp.dir}" excludes="" />
+    <!-- ant 1.8 supports preserve0permissions="true" to save perms -->
   </target>
 
 </project>

@@ -53,6 +53,14 @@
     <mkdir dir="${temp.dir}/apache-tomcat-${tomcat_version}/webapps/ROOT" />
     <copy file="${basedir}/sources/index.redirect.html" toFile="${temp.dir}/apache-tomcat-${tomcat_version}/webapps/ROOT/index.html" />
 
+    <!-- Add startup / shutdown scripts (yoinked from Saiku) -->
+    <copy file="${basedir}/sources/start-dynamoservices.bat" toFile="${temp.dir}/apache-tomcat-${tomcat_version}/start-dynamoservices.bat" />
+    <copy file="${basedir}/sources/start-dynamoservices.sh" toFile="${temp.dir}/apache-tomcat-${tomcat_version}/start-dynamoservices.sh" />
+    <copy file="${basedir}/sources/stop-dynamoservices.bat" toFile="${temp.dir}/apache-tomcat-${tomcat_version}/stop-dynamoservices.bat" />
+    <copy file="${basedir}/sources/stop-dynamoservices.sh" toFile="${temp.dir}/apache-tomcat-${tomcat_version}/stop-dynamoservices.sh" />
+    <copy file="${basedir}/sources/set-java.bat" toFile="${temp.dir}/apache-tomcat-${tomcat_version}/set-java.bat" />
+    <copy file="${basedir}/sources/set-java.sh" toFile="${temp.dir}/apache-tomcat-${tomcat_version}/set-java.sh" />
+
   </target>
 	
   <!-- retrieveWars only used in CI system -->

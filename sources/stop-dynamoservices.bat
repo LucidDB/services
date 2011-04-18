@@ -1,13 +1,11 @@
-#!/bin/sh
+@echo off
+setlocal
 
-DIR_REL=`dirname $0`
-cd $DIR_REL
-DIR=`pwd`
-cd -
+call "%~dp0\set-java.bat"
 
-. "$DIR/set-java.sh"
-  setJava
-
-cd "$DIR/tomcat/bin"
-JAVA_HOME=$_JAVA_HOME
-sh shutdown.sh
+cd tomcat\bin
+set CATALINA_HOME=%~dp0tomcat
+set JAVA_HOME=%_JAVA_HOME%
+shutdown.bat
+endlocal
+exit

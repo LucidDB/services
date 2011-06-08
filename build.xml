@@ -1,6 +1,6 @@
 <project name="DynamoDB-Services" default="package">
 
-  <property name="tomcat_version" value="7.0.0" />
+  <property name="tomcat_version" value="7.0.14" />
   <property name="tomcat_zip" value="${basedir}/sources/apache-tomcat-${tomcat_version}.zip" />
   <property name="deploy_zip_name" value="dynamobi-services" />
 

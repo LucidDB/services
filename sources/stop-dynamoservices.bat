@@ -3,8 +3,8 @@ setlocal
 
 call "%~dp0\set-java.bat"
 
-cd tomcat\bin
-set CATALINA_HOME=%~dp0tomcat
+cd bin
+set CATALINA_HOME=%~dp0
 set JAVA_HOME=%_JAVA_HOME%
 shutdown.bat
 endlocal

@@ -8,6 +8,6 @@ cd -
 . "$DIR/set-java.sh"
   setJava
 
-cd "$DIR/tomcat/bin"
+cd "$DIR/bin"
 JAVA_HOME=$_JAVA_HOME
 sh shutdown.sh

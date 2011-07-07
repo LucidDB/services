@@ -9,7 +9,7 @@ cd -
 
  setJava
 
- cd "$DIR/tomcat/bin"
+ cd "$DIR/bin"
  export CATALINA_OPTS="-Xms256m -Xmx512m -XX:MaxPermSize=256m"
  JAVA_HOME=$_JAVA_HOME
  sh startup.sh
